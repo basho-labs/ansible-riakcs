@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: James Martin
+  author: James Martin <jmartin@basho.com>
   description: Riak CS is an S3 API compatible object store.
   company: Basho
   license: Apache

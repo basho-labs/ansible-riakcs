@@ -1,0 +1,2 @@
+---
+riakcs_patch_dir: "{{ riakcs_usr_lib }}/riak-cs/lib/basho-patches"

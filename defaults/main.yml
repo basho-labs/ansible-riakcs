@@ -1,0 +1,23 @@
+---
+riak_pb_port: 8087
+riakcs_admin_creds: 
+  key: foo 
+  secret: bar
+riakcs_anon_user_creation: 'false'
+riakcs_auth_module: riak_cs_s3_auth
+riakcs_bind_ip: 0.0.0.0
+riakcs_creds_path: /tmp/riakcs_creds.yml
+riakcs_custom_package: no
+riakcs_fold_objects_for_list_keys: 'true'
+riakcs_iface: eth0
+riakcs_ip_addr: "{{ hostvars[inventory_hostname]['ansible_' + riakcs_iface]['ipv4']['address'] }}"
+riakcs_node_name: "riak-cs@{{ riakcs_ip_addr }}"
+riakcs_package_release: 1
+riakcs_port: 8080
+riakcs_request_pool: 256
+riakcs_rewrite_module: riak_cs_s3_rewrite
+riakcs_root_host: s3.amazonaws.com
+riakcs_version: 1.4.4
+stanchion_iface: eth0
+stanchion_ip: "{{ hostvars[groups['stanchion'][0]]['ansible_' + stanchion_iface]['ipv4']['address'] }}"
+stanchion_port: 8085

@@ -1,0 +1,3 @@
+---
+- name: install riakcs
+  yum: name={{ riakcs_package }} state=present

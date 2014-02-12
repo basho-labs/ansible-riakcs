@@ -1,0 +1,43 @@
+---
+# Load specified credentials for riakcs, if not revert to default
+- name: including vars
+  include_vars: "{{ item }}"
+  with_first_found:
+   - "{{ riakcs_creds_path }}"
+   - "default_creds.yml"
+  tags:
+  - creds
+
+- name: Add the OS specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: create basho patches dir
+  file: state=directory path={{ riakcs_patch_dir  }}
+
+- name: copying custom beams
+  copy: src={{ item }} dest={{ riakcs_patch_dir }}
+  with_fileglob:
+  - "{{ riakcs_custom_beams_dir }}/*.beam"
+  when: riakcs_custom_beams_dir != False
+  notify:
+  - restart riakcs
+
+- name: configure ulimit for riak-cs user
+  copy: src=etc_security_limits.d_riakcs.conf dest=/etc/security/limits.d/riakcs.conf
+
+
+- name: configure /etc/riak-cs/app.config
+  template: src=etc_riak-cs_app.config.j2 dest=/etc/riak-cs/app.config
+  tags: configfiles
+  notify: restart riakcs
+  tags:
+  - creds
+  - configfiles
+
+- name: configure /etc/riak-cs/vm.args
+  template: src=etc_riak-cs_vm.args.j2 dest=/etc/riak-cs/vm.args
+  tags: configfiles
+  notify: restart riakcs
+
+- name: start riakcs
+  service: name=riak-cs state=started enabled=yes

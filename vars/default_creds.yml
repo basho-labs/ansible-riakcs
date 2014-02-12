@@ -1,0 +1,3 @@
+riakcs_admin_creds:
+  key: foo
+  secret: bar

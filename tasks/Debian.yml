@@ -1,0 +1,17 @@
+---
+- name: set the riakcs ulimit
+  copy: src=etc_default_riak-cs_ulimit dest=/etc/default/riak-cs
+
+- name: install riakcs
+  apt: name={{ riakcs_package }} state=present
+  when: riakcs_custom_package is not defined
+
+- name: install riakcs custom
+  command: dpkg --skip-same-version -i {{ riakcs_package }}
+  register: dpkg_result
+  changed_when: dpkg_result.stdout.startswith('Selecting')
+  when: riakcs_custom_package is defined
+
+- name: set the riakcs ulimit
+  copy: src=etc_default_riakcs_ulimit dest=/etc/default/riakcs owner=riakcs group=riakcs
+

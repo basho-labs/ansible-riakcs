@@ -6,12 +6,12 @@ This role will setup Riak CS on a single node. It will ***not*** build a Riak CS
 Requirements
 ------------
 
-None
+Tested with Riak CS 1.4.4 and CentOS 6 and Ubuntu Precise.
 
 Role Variables
 --------------
 
-The following variables are available
+If you have trouble seeing the tables below, please [read the documentation on Github](https://github.com/basho/ansible-riakcs/blob/master/README.md).
 
 Variables listed with "OS Specific" and "Install specific" have values defined in `vars/<ansible_os_family>.yml`.
 
@@ -93,9 +93,9 @@ If you're doing simple, single node testing (not production!)
 	- hosts: riak_cluster
 	  sudo: True
 	  roles:
-	  - { role: riakcs-packages, tags: ["riakcs", "packages"] }
-	  - { role: riakcs, tags: ["riakcs"] }
-	  - { role: stanchion, tags: ["stanchion"] }
+	  - { role: basho.riakcs-packages, tags: ["riakcs", "packages"] }
+	  - { role: basho.riakcs, tags: ["riakcs"] }
+	  - { role: basho.stanchion, tags: ["stanchion"] }
 
 And you'll still have to reset your credentials with the `reset_creds.yml` as per above.
 

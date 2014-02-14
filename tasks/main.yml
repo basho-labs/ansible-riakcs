@@ -4,7 +4,7 @@
   include_vars: "{{ item }}"
   with_first_found:
    - "{{ riakcs_creds_path }}"
-   - "default_creds.yml"
+   - "../vars/default_creds.yml"
   tags:
   - creds
 

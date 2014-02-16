@@ -57,9 +57,9 @@ See examples for more details
 Playbooks
 -------
 
-There are some sample playbooks in the [examples/](examples/) directory as well as a typical hosts file.
+There are some sample playbooks in the [examples/](https://github.com/basho/ansible-riakcs/tree/master/examples) directory as well as a typical hosts file.
 
-Take a look at [setup_riakcs.yml](examples/setup_riakcs.yml).
+Take a look at [setup_riakcs.yml](https://github.com/basho/ansible-riakcs/blob/master/examples/setup_riakcs.yml).
 
 
 ---
@@ -75,13 +75,13 @@ This playbook will
 
 **Riak CS Credentials**
 
-You'll of course need some Riak CS credentials to use Riak CS.  After the above playbook is run, run the the [reset_creds.yml](examples/reset_creds.yml) playbook.  You'll only need to do this on a fresh install or if you need to reset the admin credentials.
+You'll of course need some Riak CS credentials to use Riak CS.  After the above playbook is run, run the the [reset_creds.yml](https://github.com/basho/ansible-riakcs/blob/master/examples/reset_creds.yml) playbook.  You'll only need to do this on a fresh install or if you need to reset the admin credentials.
 
 This will generate the admin user keys for the installation, and store them in /tmp/riakcs-creds.yml.  This can be overriden with the riakcs_creds_path variable.
 
 I highly recommend you use the --tags creds option when resetting creds, this will force ansible to run only parts of the role relating to resetting credentials.  Example:
 
-`ansible-playbook -v -i <path_to_your_inventory> reset_creds.yml  --tags creds`
+`ansible-playbook -v -i path_to_inventory reset_creds.yml  --tags creds`
 
 
 

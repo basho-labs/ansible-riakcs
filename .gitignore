@@ -1,0 +1,6 @@
+.vagrant
+examples/roles/
+examples/basho.riak
+examples/basho.riak-common
+examples/basho.riakcs-packages
+examples/basho.stanchion

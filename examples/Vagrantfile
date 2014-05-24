@@ -3,13 +3,13 @@
 
 VAGRANTFILE_API_VERSION = "2"
 
-# Ensure basho.riak-common dependency is in place
-if [ "up", "provision" ].include?(ARGV.first) && File.directory?("roles") && ( 
-  (!File.directory?("roles/basho.riak-common") || File.symlink?("roles/basho.riak-common")        ) || 
-  (!File.directory?("roles/basho.riak") || File.symlink?("roles/basho.riak")                      ) || 
+# Ensure dependencies are in place
+if [ "up", "provision" ].include?(ARGV.first) && File.directory?("roles") && (
+  (!File.directory?("roles/basho.riak-common") || File.symlink?("roles/basho.riak-common")        ) ||
+  (!File.directory?("roles/basho.riak") || File.symlink?("roles/basho.riak")                      ) ||
   (!File.directory?("roles/basho.stanchion") || File.symlink?("roles/basho.stanchion")            ) ||
   (!File.directory?("roles/basho.riakcs-packages") || File.symlink?("roles/basho.riakcs-packages")) )
-  system("ansible-galaxy install -r roles.txt -p roles --force")
+  system("ansible-galaxy install -r roles.txt -p roles")
 end
 
 # Grab local IP address for the proxy

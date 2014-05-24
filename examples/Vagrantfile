@@ -23,23 +23,19 @@ def local_ip
       s.connect "64.233.187.99", 1
       s.addr.last
     end
+  ensure
+    Socket.do_not_reverse_lookup = orig
   end
 end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |cluster|
-
-    if Vagrant.has_plugin?("vagrant-cachier")
-        # Configure cached packages to be shared between instances of the same base box.
-        cluster.cache.scope = :box
-    end
-    
-    cluster.vm.box = if ENV["ANSIBLE_RIAK_OS"] == "UBUNTU"
-      "chef/ubuntu-12.04"
-    elsif ENV["ANSIBLE_RIAK_OS"] == "CENTOS"
-      "chef/centos-6.5"
-    else
-      "chef/ubuntu-12.04"
-    end
+  cluster.vm.box = if ENV["ANSIBLE_RIAK_CS_OS"] == "UBUNTU"
+    "chef/ubuntu-12.04"
+  elsif ENV["ANSIBLE_RIAK_CS_OS"] == "CENTOS"
+    "chef/centos-6.5"
+  else
+    "chef/ubuntu-12.04"
+  end
 
   # Wire up the proxy
   if Vagrant.has_plugin?("vagrant-proxyconf")
@@ -63,6 +59,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |cluster|
 
           ansible.extra_vars = {
             riak_iface: "eth1",
+            riakcs_iface: "eth1",
+            stanchion_iface: "eth1"
           }
 
           ansible.verbose = "vvvv"
@@ -70,7 +68,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |cluster|
         end
       end
     end
-
-
   end
 end

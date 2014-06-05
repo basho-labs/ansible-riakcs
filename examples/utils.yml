@@ -1,0 +1,18 @@
+---
+- hosts: all
+  sudo: yes
+  tasks:
+  - name: install multiple packages
+    action: apt name="{{item}}" state=installed
+    with_items:
+    - vim 
+    - netcat 
+    - ngrep
+    - tcpdump 
+    - zsh
+    - git
+    - tmux
+    - python-pycurl
+    - ssh
+    - s3cmd
+    - curl

@@ -2,7 +2,7 @@
   sudo: True
   roles:
   - { role: basho.riakcs-packages, tags: ["riakcs", "packages"] }
-  - { role: basho.riakcs, tags: ["riakcs"] }
+  - { role: basho.riakcs, tags: ["riakcs"], riakcs_anon_user_creation: 'true' }
 
 - hosts: stanchion
   sudo: True
@@ -10,3 +10,4 @@
   - { role: basho.stanchion, tags: ["stanchion"] }
 
 - include: form_cluster.yml
+- include: utils.yml

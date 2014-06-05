@@ -1,0 +1,27 @@
+find /var/lib/riak/bitcask/
+find /var/lib/riak/leveldb/
+find /var/lib/riak/bitcask/
+s3cmd 
+cp /vagrant/.s3cfg ~
+s3cmd ls
+s3cmd del s3://bar 
+s3cmd del s3://foo
+s3cmd la
+s3cmd del s3://foo/test4.iso
+df -h
+df -b
+df --help
+df -k
+df -m
+df -k
+df
+df -h
+df -m
+sudo riak-admin 
+sudo riak-admin member-status
+sudo shutdown now -h
+sudo riak-admin member-status
+sudo service riak-cs stop 
+sudo service riak-cs start
+sudo service riak-cs ping
+p

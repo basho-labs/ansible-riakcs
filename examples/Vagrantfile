@@ -50,12 +50,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |cluster|
     cluster.vm.define "riak-0#{index}" do |machine|
       machine.vm.hostname = "riak-0#{index}"
       machine.vm.network "private_network", ip: "10.42.0.#{last_octet}"
+      machine.vm.network :forwarded_port, guest: 8080, host: sprintf("%s8080",index).to_i
+      machine.vm.network :forwarded_port, guest: 8098, host: sprintf("%s8098",index).to_i
+      machine.vm.network :forwarded_port, guest: 8087, host: sprintf("%s8087",index).to_i
 
       if (index) == 3
         machine.vm.provision "ansible" do |ansible|
           ansible.playbook = "./setup_riakcs.yml"
           ansible.inventory_path = "./hosts"
           ansible.raw_arguments = [ "-T 30" ]
+
+
+
 
           ansible.extra_vars = {
             riak_iface: "eth1",

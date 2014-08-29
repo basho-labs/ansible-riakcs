@@ -1,4 +1,3 @@
-#jinja2:variable_start_string:'(<' , variable_end_string:'>)'
 [
  %% Riak CS configuration
  {riak_cs, [
@@ -6,17 +5,17 @@
 
               %% Riak CS http/https port and IP address to listen at
               %% for object storage activity
-              {cs_ip, "(< riakcs_bind_ip >)"},
-              {cs_port, (< riakcs_port >) } ,
+              {cs_ip, "{{ riakcs_bind_ip }}"},
+              {cs_port, {{ riakcs_port }} } ,
 
               %% Riak node to which Riak CS access
               {riak_ip, "127.0.0.1"},
-              {riak_pb_port, (< riak_pb_port >) } ,
+              {riak_pb_port, {{ riak_pb_port }} } ,
 
               %% Configuration for access to request
               %% serialization service
-              {stanchion_ip, "(< stanchion_ip >)"},
-              {stanchion_port, (< stanchion_port >) },
+              {stanchion_ip, "{{ stanchion_ip }}"},
+              {stanchion_port, {{ stanchion_port }} },
               {stanchion_ssl, false },
 
               %% Enable this to allow the creation of an admin user
@@ -25,7 +24,7 @@
               %% specifically dictates letting anonymous users to
               %% create accounts.
 
-              {anonymous_user_creation, (< riakcs_anon_user_creation >) },
+              {anonymous_user_creation, {{ riakcs_anon_user_creation }} },
 
               %% Admin user credentials. Admin access like
               %% /riak-cs/stats requires this entry to be set
@@ -33,8 +32,8 @@
               %% the admin credentials specified in the stanchion
               %% app.config for the system to function properly.
 
-              {admin_key, "(< riakcs_admin_creds.key >)"},
-              {admin_secret, "(< riakcs_admin_creds.secret >)"},
+              {admin_key, "{{ riakcs_admin_creds.key }}"},
+              {admin_secret, "{{ riakcs_admin_creds.secret }}"},
 
               %% Port and IP address to listen on for system
               %% administration tasks. Uncomment the following lines
@@ -53,26 +52,26 @@
               %% Root host name which Riak CS accepts.
               %% Your CS bucket at s3.example.com will be accessible
               %% via URL like http://bucket.s3.example.com/object/name
-              {cs_root_host, "(< riakcs_root_host >)"},
+              {cs_root_host, "{{ riakcs_root_host }}"},
 
               %% Connection pools
               %% Each pool is specified as a nested
-              %% tuple of {Name, {FixedSize, OverflowSize }}
+              %% tuple of {Name, {FixedSize, OverflowSize } }
               {connection_pools,
                [
-                {request_pool, { (< riakcs_request_pool >), 0} },
+                {request_pool, { {{ riakcs_request_pool }}, 0} },
                 {bucket_list_pool, {5, 0} }
                ]},
 
               %% == API and Authentication ==
-             {rewrite_module, (< riakcs_rewrite_module >) },
-             {auth_module, (< riakcs_auth_module >) },
+             {rewrite_module, {{ riakcs_rewrite_module }} },
+             {auth_module, {{ riakcs_auth_module }} },
 
               %% == Bucket (List Objects) ==
 
               %% Set this to true once you have upgraded all of your
               %% Riak nodes to 1.4.0 or greater.
-              {fold_objects_for_list_keys, (< riakcs_fold_objects_for_list_keys >) },
+              {fold_objects_for_list_keys, {{ riakcs_fold_objects_for_list_keys }} },
 
               %% == n-val 1 GET requests ==
 

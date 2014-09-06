@@ -4,12 +4,12 @@
 VAGRANTFILE_API_VERSION = "2"
 
 # Ensure dependencies are in place
-if [ "up", "provision" ].include?(ARGV.first) && File.directory?("roles") && (
-  (!File.directory?("roles/basho.riak-common") || File.symlink?("roles/basho.riak-common")        ) ||
-  (!File.directory?("roles/basho.riak") || File.symlink?("roles/basho.riak")                      ) ||
-  (!File.directory?("roles/basho.stanchion") || File.symlink?("roles/basho.stanchion")            ) ||
-  (!File.directory?("roles/basho.riakcs-packages") || File.symlink?("roles/basho.riakcs-packages")) )
-  system("ansible-galaxy install -r roles.txt -p roles")
+if [ "up", "provision", "pristine" ].include?(ARGV.first) && File.directory?("roles") && (
+  (!File.directory?("roles/basho.riak-common")     && !File.symlink?("roles/basho.riak-common")      ) ||
+  (!File.directory?("roles/basho.riak")            && !File.symlink?("roles/basho.riak")             ) ||
+  (!File.directory?("roles/basho.stanchion")       && !File.symlink?("roles/basho.stanchion")        ) ||
+  (!File.directory?("roles/basho.riakcs-packages") && !File.symlink?("roles/basho.riakcs-packages")) )
+  system("ansible-galaxy install -r roles.txt -p roles --ignore-errors")
 end
 
 # Grab local IP address for the proxy
@@ -40,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |cluster|
   # Wire up the proxy
   if Vagrant.has_plugin?("vagrant-proxyconf")
     cluster.proxy.http     = "http://#{local_ip}:8123/"
-    cluster.proxy.https    = "http://#{local_ip}}:8123/"
+    cluster.proxy.https    = "http://#{local_ip}:8123/"
     cluster.proxy.no_proxy = "localhost,127.0.0.1"
   end
 
@@ -51,11 +51,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |cluster|
       machine.vm.hostname = "riak-0#{index}"
       machine.vm.network "private_network", ip: "10.42.0.#{last_octet}"
 
+      if ENV["ANSIBLE_RIAK_CS_FORWARD_PORTS"]
+          puts machine.vm.hostname + ": Forwarding ports to local host" 
+          machine.vm.network :forwarded_port, guest: 8080, host: sprintf("%s8080",index).to_i
+          machine.vm.network :forwarded_port, guest: 8098, host: sprintf("%s8098",index).to_i
+          machine.vm.network :forwarded_port, guest: 8087, host: sprintf("%s8087",index).to_i
+      end
+
       if (index) == 3
         machine.vm.provision "ansible" do |ansible|
           ansible.playbook = "./setup_riakcs.yml"
           ansible.inventory_path = "./hosts"
-          ansible.raw_arguments = [ "-T 30" ]
+          ansible.raw_arguments = [ "--timeout=60" ]
 
           ansible.extra_vars = {
             riak_iface: "eth1",

@@ -1,4 +1,4 @@
-basho.stanchion, v1.0.5
-basho.riakcs-packages, v1.0.2
-basho.riak-common,v1.0.2
-basho.riak,v1.0.8
+basho.riak-common, v2.0.0.1
+basho.stanchion, v1.0.6.1
+basho.riakcs-packages, v1.0.3
+basho.riak, v1.0.9.1

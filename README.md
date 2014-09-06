@@ -105,7 +105,10 @@ License
 
 Apache
 
-Author Information
+Maintainer Information
 ------------------
 
-jmartin@baso.com
+- James Martin 
+- Bryan Hunt (<bhunt@basho.com>)
+- Hector Castro
+

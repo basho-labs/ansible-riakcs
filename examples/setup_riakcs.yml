@@ -2,7 +2,7 @@
   sudo: True
   roles:
   - { role: basho.riakcs-packages, tags: ["riakcs", "packages"], riakcs_version: 1.5.0 }
-  - { role: basho.riakcs, tags: ["riakcs"] }
+  - { role: basho.riakcs, tags: ["riakcs"],  riakcs_version: 1.5.0 }
 
 - hosts: stanchion
   sudo: True

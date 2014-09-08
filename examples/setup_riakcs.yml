@@ -2,11 +2,12 @@
   sudo: True
   roles:
   - { role: basho.riakcs-packages, tags: ["riakcs", "packages"], riakcs_version: 1.5.0 }
-  - { role: basho.riakcs, tags: ["riakcs"],  riakcs_version: 1.5.0 }
+  - { role: basho.riakcs, tags: ["riakcs"],  riakcs_version: 1.5.0, riakcs_anon_user_creation: 'true' }
 
 - hosts: stanchion
   sudo: True
   roles:
   - { role: basho.stanchion, tags: ["stanchion"] , stanchion_version: 1.5.0 }
 
+- include: form_cluster.yml
 - include: utils.yml
